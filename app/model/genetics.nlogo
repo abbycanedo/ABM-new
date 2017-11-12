@@ -16,8 +16,20 @@ to go
   ask persons[
     set age age + 0.0001
     if age >= lifespan[die]
+    find-partner
+;    if age > 15 and age < 50 and partner = -1 and gender = "female" [find-partner]
+    ; if no partner, find amongst opposite gender and age 15-50
+    ; reproduce
   ]
   tick
+end
+
+to find-partner
+  if any? persons with [not any? link-neighbors][
+    ask persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
+      create-link-with one-of persons with [gender = "female" and not any? link-neighbors]
+    ]
+  ]
 end
 
 to create-ancestor
@@ -32,24 +44,31 @@ to set-person-attrib
   set gender one-of["male" "female"]
   set age 0
   set partner -1
-  set lifespan 65 + random 10
+  set-person-lifespan
   set-person-color
+end
+
+to set-person-lifespan
+  set lifespan 65.0 + random 10
+  if allele1 = "h"[
+    if allele2 = "h"[set lifespan lifespan * 0.50]
+  ]
 end
 
 to set-person-color
   if allele1 = "H"[
     if allele2 = "H"[
-      if gender = "male"[set color 105]
-      if gender = "female"[set color 16]
+      if gender = "male"[set color 103]
+      if gender = "female"[set color 14]
     ]
     if allele2 = "h"[
       if gender = "male"[set color 95]
-      if gender = "female"[set color 17]
+      if gender = "female"[set color 16]
     ]
   ] if allele1 = "h"[
     if allele2 = "H"[
       if gender = "male"[set color 95]
-      if gender = "female"[set color 17]
+      if gender = "female"[set color 16]
     ]
     if allele2 = "h"[
       if gender = "male"[set color 85]
@@ -128,7 +147,7 @@ init_population_count
 init_population_count
 10
 50
-20.0
+10.0
 2
 1
 NIL
