@@ -25,9 +25,13 @@ to go
 end
 
 to find-partner
-  if any? persons with [not any? link-neighbors][
+  if any? persons with [][
     ask persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
-      create-link-with one-of persons with [gender = "female" and not any? link-neighbors]
+      if any? persons with [not any? link-neighbors and gender = "female" age < 50 and age > 15][
+        create-link-with one-of persons with[
+          not any? link-neighbors and gender = "female" age < 50 and age > 15
+        ]
+      ]
     ]
   ]
 end
