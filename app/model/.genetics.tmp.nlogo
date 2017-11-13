@@ -1,5 +1,5 @@
 breed [persons person]
-persons-own [age gender mother father allele1 allele2 partner lifespan]
+persons-own [age gender mother partner allele1 allele2 lifespan child_count]
 
 to setup
   clear-all
@@ -14,23 +14,42 @@ end
 to go
   if not any? persons [stop]
   ask persons[
-    set age age + 0.0001
+    set age age + 1
     if age >= lifespan[die]
     find-partner
-;    if age > 15 and age < 50 and partner = -1 and gender = "female" [find-partner]
-    ; if no partner, find amongst opposite gender and age 15-50
-    ; reproduce
+    if child_count < max_num_child and gender = "female" and age < 50 and any? link-neighbors[
+      reproduce
+    ]
   ]
   tick
 end
 
+to reproduce
+  let p random-float 100
+  print p
+  if (age < 25 and p < 86) or (age >= 25 and age < 30 and p < 78) or
+     (age >= 30 and age < 35 and p < 63) or (age >= 35 and age < 40 and p < 52) or
+     (age >= 40 and age < 45 and p < 36) or (age >= 45 and age <= 50 and p < 5) [
+    hatch 1 [
+      setxy random-xcor random-ycor
+      set mother who
+      set-alleles
+      set-person-attrib
+    ]
+    ask out-link-neighbors[set child_count child_count + 1]
+    set child_count child_count + 1
+  ]
+end
+
 to find-partner
-  if any? persons with [][
+  if any? persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
     ask persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
-      if any? persons with [not any? link-neighbors and gender = "female" age < 50 and age > 15][
+      if any? persons with [not any? link-neighbors and gender = "female" and age < 50 and age > 15][
         create-link-with one-of persons with[
-          not any? link-neighbors and gender = "female" age < 50 and age > 15
+          not any? link-neighbors and gender = "female" and age < 50 and age > 15
         ]
+        ask out-link-neighbors[set child_count 0]
+        set child_count 0
       ]
     ]
   ]
@@ -38,16 +57,21 @@ end
 
 to create-ancestor
   set mother -1
-  set father -1
   set allele1 one-of["H" "h"]
   set allele2 one-of["H" "h"]
   set-person-attrib
+end
+
+to set-alleles
+  set allele1 one-of["H" "h"]
+  set allele2 one-of["H" "h"]
 end
 
 to set-person-attrib
   set gender one-of["male" "female"]
   set age 0
   set partner -1
+  set child_count 0
   set-person-lifespan
   set-person-color
 end
@@ -102,8 +126,8 @@ GRAPHICS-WINDOW
 16
 -16
 16
-0
-0
+1
+1
 1
 ticks
 30.0
@@ -153,6 +177,21 @@ init_population_count
 50
 10.0
 2
+1
+NIL
+HORIZONTAL
+
+SLIDER
+22
+127
+194
+160
+max_num_child
+max_num_child
+1
+10
+5.0
+1
 1
 NIL
 HORIZONTAL
