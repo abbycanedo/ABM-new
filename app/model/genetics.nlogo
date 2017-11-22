@@ -1,5 +1,5 @@
 breed [persons person]
-persons-own [age gender mother partner allele1 allele2 lifespan child_count]
+persons-own [age gender mother father allele1 allele2 lifespan child_count]
 
 to setup
   clear-all
@@ -26,13 +26,15 @@ end
 
 to reproduce
   let p random-float 100
-  print p
+  let m [who] of self
+  let f [who] of out-link-neighbors
   if (age < 25 and p < 86) or (age >= 25 and age < 30 and p < 78) or
      (age >= 30 and age < 35 and p < 63) or (age >= 35 and age < 40 and p < 52) or
      (age >= 40 and age < 45 and p < 36) or (age >= 45 and age <= 50 and p < 5) [
     hatch 1 [
       setxy random-xcor random-ycor
-      set mother who
+      set mother m
+      set father one-of f
       set-alleles
       set-person-attrib
     ]
@@ -57,6 +59,7 @@ end
 
 to create-ancestor
   set mother -1
+  set father -1
   set allele1 one-of["H" "h"]
   set allele2 one-of["H" "h"]
   set-person-attrib
@@ -70,7 +73,6 @@ end
 to set-person-attrib
   set gender one-of["male" "female"]
   set age 0
-  set partner -1
   set child_count 0
   set-person-lifespan
   set-person-color
