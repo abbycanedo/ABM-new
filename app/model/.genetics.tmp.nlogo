@@ -68,6 +68,25 @@ end
 to set-alleles
   set allele1 one-of["H" "h"]
   set allele2 one-of["H" "h"]
+  print "-----"
+  show who
+  let random-num1 random 2
+  if random-num1 = 1 [
+    set allele1 [allele1] of person mother
+  ]
+  if random-num1 = 0 [
+    set allele1 [allele2] of person mother
+  ]
+  let random-num2 random 2
+  if random-num2 = 1 [
+    set allele2 [allele1] of person father
+  ]
+  if random-num2 = 0 [
+    set allele2 [allele2] of person father
+  ]
+  print allele1
+  print allle
+  print "-----"
 
 end
 
