@@ -60,8 +60,10 @@ end
 to create-ancestor
   set mother -1
   set father -1
-  set allele1 one-of["H" "h"]
-  set allele2 one-of["H" "h"]
+  set allele1 "H"
+  set allele2 ""
+;  set allele1 one-of["H" "h"]
+;  set allele2 one-of["H" "h"]
   set-person-attrib
 end
 
@@ -70,6 +72,9 @@ to set-alleles
   set allele2 one-of["H" "h"]
   print "-----"
   show who
+  ask person mother [show who]
+  print [allele1] of person mother
+  print [allele2] of person mother
   let random-num1 random 2
   if random-num1 = 1 [
     set allele1 [allele1] of person mother
@@ -77,6 +82,10 @@ to set-alleles
   if random-num1 = 0 [
     set allele1 [allele2] of person mother
   ]
+
+  ask person father [show who]
+  print [allele1] of person father
+  print [allele2] of person father
   let random-num2 random 2
   if random-num2 = 1 [
     set allele2 [allele1] of person father
@@ -84,8 +93,9 @@ to set-alleles
   if random-num2 = 0 [
     set allele2 [allele2] of person father
   ]
+  print "child"
   print allele1
-  print allle
+  print allele2
   print "-----"
 
 end
