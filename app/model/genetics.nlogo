@@ -1,5 +1,5 @@
 breed [persons person]
-persons-own [age gender mother father allele1 allele2 lifespan child_count]
+persons-own [age gender mother father allele1 allele2 lifespan child_count partner]
 globals [total_pop carrier_pop sick_pop healthy_pop total_age mean_age]
 
 to setup
@@ -80,13 +80,19 @@ to reproduce
 end
 
 to find-partner
-  if any? persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
-    ask persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15][
-      if any? persons with [not any? link-neighbors and gender = "female" and age < 50 and age > 15][
+  if any? persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15 and partner = -1][
+    let m [mother] of self
+    let f [father] of self
+    ask persons with [not any? link-neighbors and gender = "male" and age < 50 and age > 15 and partner = -1][
+      if any? persons with [not any? link-neighbors and gender = "female" and age < 50 and age > 15 and partner = -1 and (mother != m or mother = -1) and (father != f or father = -1)][
         create-link-with one-of persons with[
-          not any? link-neighbors and gender = "female" and age < 50 and age > 15
+          not any? link-neighbors and gender = "female" and age < 50 and age > 15 and partner = -1 and (mother != m or mother = -1) and (father != f or father = -1)
         ]
-        ask out-link-neighbors[set child_count 0]
+        ask out-link-neighbors[
+          set child_count 0
+          set partner one-of [who] of out-link-neighbors
+        ]
+        set partner one-of [who] of out-link-neighbors
         set child_count 0
       ]
     ]
@@ -125,6 +131,7 @@ to set-person-attrib
   set gender one-of["male" "female"]
   set age 0
   set child_count 0
+  set partner -1
   set-person-lifespan
   set-person-color
 end
@@ -227,8 +234,8 @@ SLIDER
 init_population_count
 init_population_count
 2
-20
-8.0
+30
+4.0
 2
 1
 NIL
@@ -243,7 +250,7 @@ max_num_child
 max_num_child
 1
 5
-2.0
+3.0
 1
 1
 NIL
