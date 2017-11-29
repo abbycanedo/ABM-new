@@ -1,26 +1,53 @@
 breed [persons person]
 persons-own [age gender mother father allele1 allele2 lifespan child_count]
+globals [total_pop carrier_pop sick_pop healthy_pop total_age mean_age]
 
 to setup
   clear-all
+  set healthy_pop 0
+  set carrier_pop 0
+  set sick_pop 0
   set-default-shape persons "person"
   create-persons init_population_count[
     setxy random-xcor random-ycor
     create-ancestor
+    if allele1 = "H"[
+      if allele2 = "H" [set healthy_pop healthy_pop + 1]
+      if allele2 = "h" [set carrier_pop carrier_pop + 1]
+    ]
+    if allele1 = "h"[
+      if allele2 = "H" [set carrier_pop carrier_pop + 1]
+      if allele2 = "h" [set sick_pop sick_pop + 1]
+    ]
   ]
+  set total_pop init_population_count
   reset-ticks
 end
 
 to go
+  set total_age 0
   if not any? persons [stop]
   ask persons[
     set age age + 1
-    if age >= lifespan[die]
+    if age >= lifespan[
+      if allele1 = "H"[
+        if allele2 = "H" [set healthy_pop healthy_pop - 1]
+        if allele2 = "h" [set carrier_pop carrier_pop - 1]
+      ]
+      if allele1 = "h"[
+        if allele2 = "H" [set carrier_pop carrier_pop - 1]
+        if allele2 = "h" [set sick_pop sick_pop - 1]
+      ]
+      set total_pop total_pop - 1
+      die
+    ]
     find-partner
     if child_count < max_num_child and gender = "female" and age < 50 and any? link-neighbors[
       reproduce
     ]
+    set total_age total_age + age
   ]
+  if total_pop > 0 [set mean_age total_age / total_pop]
   tick
 end
 
@@ -36,8 +63,17 @@ to reproduce
       set mother m
       set father one-of f
       set-alleles
+      if allele1 = "H"[
+        if allele2 = "H" [set healthy_pop healthy_pop + 1]
+        if allele2 = "h" [set carrier_pop carrier_pop + 1]
+      ]
+      if allele1 = "h"[
+        if allele2 = "H" [set carrier_pop carrier_pop + 1]
+        if allele2 = "h" [set sick_pop sick_pop + 1]
+      ]
       set-person-attrib
     ]
+    set total_pop total_pop + 1
     ask out-link-neighbors[set child_count child_count + 1]
     set child_count child_count + 1
   ]
@@ -60,21 +96,12 @@ end
 to create-ancestor
   set mother -1
   set father -1
-  set allele1 "H"
-  set allele2 ""
-;  set allele1 one-of["H" "h"]
-;  set allele2 one-of["H" "h"]
+  set allele1 one-of["H" "h"]
+  set allele2 one-of["H" "h"]
   set-person-attrib
 end
 
 to set-alleles
-  set allele1 one-of["H" "h"]
-  set allele2 one-of["H" "h"]
-  print "-----"
-  show who
-  ask person mother [show who]
-  print [allele1] of person mother
-  print [allele2] of person mother
   let random-num1 random 2
   if random-num1 = 1 [
     set allele1 [allele1] of person mother
@@ -83,9 +110,6 @@ to set-alleles
     set allele1 [allele2] of person mother
   ]
 
-  ask person father [show who]
-  print [allele1] of person father
-  print [allele2] of person father
   let random-num2 random 2
   if random-num2 = 1 [
     set allele2 [allele1] of person father
@@ -93,10 +117,7 @@ to set-alleles
   if random-num2 = 0 [
     set allele2 [allele2] of person father
   ]
-  print "child"
-  print allele1
-  print allele2
-  print "-----"
+
 
 end
 
@@ -138,10 +159,10 @@ to set-person-color
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-228
-10
-672
-455
+229
+13
+673
+458
 -1
 -1
 13.212121212121213
@@ -165,10 +186,10 @@ ticks
 30.0
 
 BUTTON
-40
-45
-104
-78
+46
+74
+110
+107
 Setup
 setup
 NIL
@@ -182,10 +203,10 @@ NIL
 1
 
 BUTTON
-112
-45
-175
-78
+118
+74
+181
+107
 Go
 go
 T
@@ -199,10 +220,10 @@ NIL
 1
 
 SLIDER
-22
-89
-194
-122
+28
+130
+200
+163
 init_population_count
 init_population_count
 10
@@ -214,19 +235,102 @@ NIL
 HORIZONTAL
 
 SLIDER
-22
-127
-194
-160
+27
+186
+199
+219
 max_num_child
 max_num_child
 1
-10
-2.0
+5
+3.0
 1
 1
 NIL
 HORIZONTAL
+
+MONITOR
+62
+246
+164
+291
+Total Population
+total_pop
+17
+1
+11
+
+MONITOR
+20
+317
+77
+362
+Carrier
+carrier_pop
+17
+1
+11
+
+MONITOR
+83
+317
+140
+362
+Healthy
+healthy_pop
+17
+1
+11
+
+MONITOR
+145
+317
+202
+362
+Sick
+sick_pop
+17
+1
+11
+
+PLOT
+702
+67
+902
+217
+Population vs Time
+time
+count
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Total" 1.0 0 -16777216 true "" "plot total_pop"
+"Carrier" 1.0 0 -4699768 true "" "plot carrier_pop"
+"Healthy" 1.0 0 -7858858 true "" "plot healthy_pop"
+"Sick" 1.0 0 -2382653 true "" "plot sick_pop"
+
+PLOT
+702
+235
+902
+385
+Mean Age vs Time
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot mean_age"
 
 @#$#@#$#@
 ## WHAT IS IT?
