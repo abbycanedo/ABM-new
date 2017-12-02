@@ -1,5 +1,5 @@
 breed [persons person]
-persons-own [age gender mother father allele1 allele2 lifespan child_count partner]
+persons-own [age gender mother father allele1 allele2 lifespan partner child_count]
 globals [total_pop carrier_pop sick_pop healthy_pop total_age mean_age]
 
 to setup
@@ -63,6 +63,8 @@ to reproduce
       set mother m
       set father one-of f
       set-alleles
+      set-person-attrib
+
       if allele1 = "H"[
         if allele2 = "H" [set healthy_pop healthy_pop + 1]
         if allele2 = "h" [set carrier_pop carrier_pop + 1]
@@ -71,7 +73,6 @@ to reproduce
         if allele2 = "H" [set carrier_pop carrier_pop + 1]
         if allele2 = "h" [set sick_pop sick_pop + 1]
       ]
-      set-person-attrib
     ]
     set total_pop total_pop + 1
     ask out-link-neighbors[set child_count child_count + 1]
@@ -193,10 +194,10 @@ ticks
 30.0
 
 BUTTON
-46
-74
-110
-107
+53
+59
+117
+92
 Setup
 setup
 NIL
@@ -210,10 +211,10 @@ NIL
 1
 
 BUTTON
-118
-74
-181
-107
+125
+59
+188
+92
 Go
 go
 T
@@ -227,25 +228,25 @@ NIL
 1
 
 SLIDER
-28
-130
-200
-163
+34
+102
+206
+135
 init_population_count
 init_population_count
 2
 30
-4.0
+10.0
 2
 1
 NIL
 HORIZONTAL
 
 SLIDER
-27
-186
-199
-219
+34
+145
+206
+178
 max_num_child
 max_num_child
 1
@@ -257,10 +258,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-62
-246
-164
-291
+72
+188
+174
+233
 Total Population
 total_pop
 17
@@ -268,10 +269,10 @@ total_pop
 11
 
 MONITOR
-20
-317
-77
-362
+29
+240
+86
+285
 Carrier
 carrier_pop
 17
@@ -279,10 +280,10 @@ carrier_pop
 11
 
 MONITOR
-83
-317
-140
-362
+92
+240
+149
+285
 Healthy
 healthy_pop
 17
@@ -290,10 +291,10 @@ healthy_pop
 11
 
 MONITOR
-145
-317
-202
-362
+154
+240
+211
+285
 Sick
 sick_pop
 17
@@ -301,10 +302,10 @@ sick_pop
 11
 
 PLOT
-702
-67
-902
-217
+697
+79
+897
+228
 Population vs Time
 time
 count
@@ -322,10 +323,10 @@ PENS
 "Sick" 1.0 0 -2382653 true "" "plot sick_pop"
 
 PLOT
-702
-235
-902
-385
+697
+241
+897
+390
 Mean Age vs Time
 NIL
 NIL
@@ -338,6 +339,61 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot mean_age"
+
+MONITOR
+50
+298
+107
+343
+Males
+count persons with [gender = \"male\"]
+17
+1
+11
+
+MONITOR
+113
+298
+171
+343
+Females
+count persons with [gender = \"female\"]
+17
+1
+11
+
+MONITOR
+28
+352
+86
+397
+Children
+count persons with [age < 21]
+17
+1
+11
+
+MONITOR
+90
+352
+147
+397
+Adult
+count persons with [age >= 21 and age < 65]
+17
+1
+11
+
+MONITOR
+150
+352
+207
+397
+Senior
+count persons with [age >= 65]
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
