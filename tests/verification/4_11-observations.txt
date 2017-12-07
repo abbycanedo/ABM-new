@@ -1,2 +1,3 @@
 what data are collected for testing and analysis?
-  real stock market trendsw
+
+	Population of the healthy, carriers, and the sick across generations.

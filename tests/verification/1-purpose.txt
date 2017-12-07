@@ -1,1 +1,1 @@
-The purpose of this model is to show how a recessive character trait, such as cystic fibrosis, is passed along generations in humans. 
+The purpose of this model is to simulate how alleles are passed along generations, and to be able to obtain data from this. Or, specifically, how a recessive character trait, such as cystic fibrosis, is passed along generations in humans. 

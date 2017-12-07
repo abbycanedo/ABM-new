@@ -1,2 +1,3 @@
 if agents adapt, does the adaptation consider past states in the form of learning?
-  It will only consider the present conditions as it adpats to the environment
+
+    The agents can only consider their present conditions as they make decisions. 

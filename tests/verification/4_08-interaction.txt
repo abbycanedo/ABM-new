@@ -1,1 +1,4 @@
-A company's stock values changes depending on envirnonmental factors
+
+Interactions between agents:
+
+	Agents can look for partners among the other agents, and they will pair up and produce offspring, passing on either of their alleles to the child. 

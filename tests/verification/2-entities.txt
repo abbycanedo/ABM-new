@@ -6,23 +6,23 @@ Entities:
 
 State Variables (persons-own):
 
-	age
-	gender
-	mother
-	father
-	allele1
-	allele2
-	lifespan
-	partner
-	child_count
+	age             // the number of years (ticks) that the person has been alive
+	gender          // gender of the person; can be "male" OR "female"
+	mother          // person id of the mother of the person; value is -1 for the initial population
+	father          // person id of the father of the person; value is -1 for the initial population
+	allele1         // "H" OR "h"
+	allele2         // "H" OR "h"
+	lifespan        // number of years until the person dies
+	partner         // person id of the partner the person eventually pairs up with; value is -1 if none
+	child_count     // number of children that the person has had
 
 State Variables (global):
 
-	total_pop
-	carrier_pop
-	sick_pop
-	healthy_pop
-	total_age
-	mean_age
-	init_population_count
-	max_num_child
+	total_pop               // total population
+	carrier_pop             // population of persons carrying a recessive allele and a dominant allele
+	sick_pop                // population of persons carrying two recessive alleles
+	healthy_pop             // population of persons carrying two dominant alleles
+	total_age               // total age of the population; used to calculate the mean age
+	mean_age                // mean age
+	init_population_count   // initial population count
+	max_num_child           // maximum number of child_count per person

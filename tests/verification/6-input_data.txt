@@ -1,2 +1,3 @@
 any external data/ files/ models needed?
-  factors that affect the trend of stock market
+
+	None.

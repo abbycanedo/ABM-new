@@ -13,9 +13,11 @@ what are the basic principles of the model?
     3. Law of dominance
         Some alleles are dominant while others are recessive; and organism with at least one dominant allele will display the effect of the dominant allele.
 
-    The offspring inherits two alleles, one from each parent. The probability of the different combinations of alleles that the offspring can inherit can be shown through a punnett square. 
+    The offspring inherits two alleles, one from each parent. The probability of the different combinations of alleles that the offspring can inherit can be shown through a punnett square. This model uses this same probability in passing on traits across generations.
     
-    The model uses this same probability in passing on traits across generations.
+    For this model, the dominant allele is "H" and the recessive allele is "h". The recessive trait that is being modelled is a sickness, such as cystic fibrosis, that can decrease the person's lifespan. This gives the recessive gene a lower probability to propagate. 
+    
+    When two persons pair up and reproduce, the allele that they will pass on to their child is randomly chosen. The child ends up inheriting two alleles--one from each parent. When this child reaches fifteen years of age, they will also be able to pair up, reproduce, and pass their genes on to their offspring.
     
     
 will the model provide insights on these principles?
@@ -24,4 +26,4 @@ will the model provide insights on these principles?
 
 does the model use new/ pre-developed theory for agent traits from which the system dynamics emerge?
   
-    No
+    No.

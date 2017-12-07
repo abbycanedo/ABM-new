@@ -24,7 +24,7 @@ initial states? which are constant, which are varying?
     
         age             // increments 1 at each tick
         lifespan        // will vary only once: if allele1 and allele2 = "h", lifespan will be halved
-        partner         // gets updated with the partner's id when the person finds a partner
+        partner         // gets updated only once, with the partner's id when the person finds a partner
         child_count     // increments 1 each time the person reproduces
         
         
