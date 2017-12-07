@@ -1,13 +1,27 @@
 what are the basic principles of the model?
 
-  Based on the data from real companies, we can make a fictional company and let its stocks behave in this way over time. 
+	The model is based on mendelian inheritance, which is based on the laws proposed by Gregor Mendel in 1865.
+    
+    Mendel's laws of inheritance:
+    
+    1. Law of segregation
+        States that during gamete formation, the alleles for each gene segregate from each other so that each gamete carries only one allele for each gene.
+    
+    2. Law of independent assortment 
+        Genes for different traits can segregate independently during the formation of gametes.
+        
+    3. Law of dominance
+        Some alleles are dominant while others are recessive; and organism with at least one dominant allele will display the effect of the dominant allele.
 
-  We can get variables, observe their relationship with the stock price of a company over time. And from this data, our model tries
-  to predict the behavior of the stock price over time as the user changes the values of the variables.
-
-
+    The offspring inherits two alleles, one from each parent. The probability of the different combinations of alleles that the offspring can inherit can be shown through a punnett square. 
+    
+    The model uses this same probability in passing on traits across generations.
+    
+    
 will the model provide insights on these principles?
 
+    The model will be able to simulate the process of mendelian inheritance, and provide data on how the alleles are propagated across generations. 
 
 does the model use new/ pre-developed theory for agent traits from which the system dynamics emerge?
-  No
+  
+    No

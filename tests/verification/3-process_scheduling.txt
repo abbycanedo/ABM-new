@@ -1,1 +1,16 @@
 Who did what and in what order?  Use pseudo-code.
+
+setup [
+    create persons(init_population_count)
+    set persons attributes 
+]
+
+go [
+    if number of persons = 0 [ stop ]  
+    for each person [ age = age + 1 ]
+    for each person [ if age >= lifespan [ die ] ]
+	if person has no partner 
+        [ find partner ]
+    if person has partner
+        [ reproduce ]
+]

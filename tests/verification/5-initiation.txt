@@ -1,4 +1,30 @@
 initial states? which are constant, which are varying?
-  There will be 3 companies
-  Each company will have random values
 
+	A number (init_population_count) of persons are created with the following properties:
+    
+        age = 0
+        gender = "male" OR "female"
+        mother = -1
+        father = -1
+        allele1 = "H" OR "h"
+        allele2 = "H" OR "h"
+        lifespan = 65 + random 10
+        partner = -1
+        child_count = 0
+    
+    Properties that will remain constant:
+    
+        gender
+        mother
+        father
+        allele1 
+        allele2
+
+    Properties that will vary:
+    
+        age             // increments 1 at each tick
+        lifespan        // will vary only once: if allele1 and allele2 = "h", lifespan will be halved
+        partner         // gets updated with the partner's id when the person finds a partner
+        child_count     // increments 1 each time the person reproduces
+        
+        

@@ -1,2 +1,7 @@
 what processes are modelled as random?
-  initial value of company's stocks
+
+	The alleles of the initial group of people are random.
+
+	The allele that the parent will pass to its offspring is random.
+
+	The choosing of partners, given the restrictions, is random.
